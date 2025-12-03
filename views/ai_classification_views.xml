@@ -193,7 +193,7 @@
                 <filter name="filter_low_confidence" string="Low Confidence (below 50%)"
                         domain="[('confidence', '&lt;', 0.5)]"/>
                 <separator/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter name="group_service" string="Service" context="{'group_by': 'service_id'}"/>
                     <filter name="group_type" string="Document Type" context="{'group_by': 'document_type'}"/>
                     <filter name="group_date" string="Date" context="{'group_by': 'create_date:day'}"/>
