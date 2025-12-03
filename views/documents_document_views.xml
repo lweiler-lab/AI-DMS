@@ -70,7 +70,7 @@
                         </group>
                     </group>
 
-                    <group string="AI Extracted Data">
+                    <group string="AI Extracted Data" name="ai_extracted_data">
                         <group>
                             <field name="extracted_vendor"/>
                             <field name="extracted_amount"/>

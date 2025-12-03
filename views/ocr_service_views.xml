@@ -115,7 +115,7 @@
                         type="object"
                         class="btn-secondary"/>
             </xpath>
-            <xpath expr="//group[@string='AI Extracted Data']" position="after">
+            <xpath expr="//group[@name='ai_extracted_data']" position="after">
                 <group string="OCR Extracted Text" invisible="not ocr_processed">
                     <group colspan="2">
                         <field name="ocr_processed" invisible="1"/>
