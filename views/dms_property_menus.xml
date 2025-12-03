@@ -20,10 +20,38 @@
               action="action_retention_policy"
               sequence="10"/>
 
+    <!-- AI Classification Log Menu -->
+    <menuitem id="menu_ai_classification_log"
+              name="Classification Log"
+              parent="menu_dms_property_root"
+              action="action_ai_classification_log"
+              sequence="15"/>
+
+    <!-- Processing Queue Menu -->
+    <menuitem id="menu_processing_queue"
+              name="Processing Queue"
+              parent="menu_dms_property_root"
+              action="action_processing_queue"
+              sequence="20"/>
+
     <!-- Configuration Menu -->
     <menuitem id="menu_dms_property_config"
               name="Configuration"
               parent="menu_dms_property_root"
               sequence="100"
               groups="group_dms_property_admin"/>
+
+    <!-- AI Services Config -->
+    <menuitem id="menu_ai_classification_services"
+              name="AI Classification"
+              parent="menu_dms_property_config"
+              action="action_ai_classification_service"
+              sequence="10"/>
+
+    <!-- OCR Services Config -->
+    <menuitem id="menu_ocr_services"
+              name="OCR Services"
+              parent="menu_dms_property_config"
+              action="action_ocr_service"
+              sequence="20"/>
 </odoo>

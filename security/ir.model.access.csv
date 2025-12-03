@@ -2,3 +2,15 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_retention_policy_user,documents.retention.policy.user,model_documents_retention_policy,group_dms_property_user,1,0,0,0
 access_retention_policy_manager,documents.retention.policy.manager,model_documents_retention_policy,group_dms_property_manager,1,1,1,0
 access_retention_policy_admin,documents.retention.policy.admin,model_documents_retention_policy,group_dms_property_admin,1,1,1,1
+access_ai_classification_service_user,dms.ai.classification.service.user,model_dms_ai_classification_service,group_dms_property_user,1,0,0,0
+access_ai_classification_service_manager,dms.ai.classification.service.manager,model_dms_ai_classification_service,group_dms_property_manager,1,1,1,0
+access_ai_classification_service_admin,dms.ai.classification.service.admin,model_dms_ai_classification_service,group_dms_property_admin,1,1,1,1
+access_ai_classification_log_user,dms.ai.classification.log.user,model_dms_ai_classification_log,group_dms_property_user,1,0,0,0
+access_ai_classification_log_manager,dms.ai.classification.log.manager,model_dms_ai_classification_log,group_dms_property_manager,1,1,0,0
+access_ai_classification_log_admin,dms.ai.classification.log.admin,model_dms_ai_classification_log,group_dms_property_admin,1,1,1,1
+access_processing_queue_user,dms.document.processing.queue.user,model_dms_document_processing_queue,group_dms_property_user,1,0,0,0
+access_processing_queue_manager,dms.document.processing.queue.manager,model_dms_document_processing_queue,group_dms_property_manager,1,1,1,0
+access_processing_queue_admin,dms.document.processing.queue.admin,model_dms_document_processing_queue,group_dms_property_admin,1,1,1,1
+access_ocr_service_user,dms.ocr.extraction.service.user,model_dms_ocr_extraction_service,group_dms_property_user,1,0,0,0
+access_ocr_service_manager,dms.ocr.extraction.service.manager,model_dms_ocr_extraction_service,group_dms_property_manager,1,1,1,0
+access_ocr_service_admin,dms.ocr.extraction.service.admin,model_dms_ocr_extraction_service,group_dms_property_admin,1,1,1,1

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Processing Queue List View -->
+    <record id="view_processing_queue_list" model="ir.ui.view">
+        <field name="name">dms.document.processing.queue.list</field>
+        <field name="model">dms.document.processing.queue</field>
+        <field name="arch" type="xml">
+            <list string="Processing Queue" decoration-danger="state == 'failed'"
+                  decoration-success="state == 'done'" decoration-warning="state == 'processing'"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="document_name"/>
+                <field name="service_id"/>
+                <field name="priority"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'pending'"
+                       decoration-warning="state == 'processing'"
+                       decoration-success="state == 'done'"
+                       decoration-danger="state == 'failed'"
+                       decoration-muted="state == 'cancelled'"/>
+                <field name="attempts"/>
+                <field name="scheduled_date"/>
+                <field name="completed_date" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Processing Queue Form View -->
+    <record id="view_processing_queue_form" model="ir.ui.view">
+        <field name="name">dms.document.processing.queue.form</field>
+        <field name="model">dms.document.processing.queue</field>
+        <field name="arch" type="xml">
+            <form string="Processing Queue Item">
+                <header>
+                    <button name="action_process" string="Process Now" type="object"
+                            class="btn-primary" invisible="state not in ['pending', 'failed']"/>
+                    <button name="action_retry" string="Retry" type="object"
+                            class="btn-secondary" invisible="state != 'failed'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            class="btn-secondary" invisible="state not in ['pending', 'processing']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="pending,processing,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Document">
+                            <field name="document_id"/>
+                            <field name="service_id"/>
+                            <field name="priority"/>
+                        </group>
+                        <group string="Processing">
+                            <field name="attempts"/>
+                            <field name="max_attempts"/>
+                            <field name="scheduled_date"/>
+                            <field name="started_date"/>
+                            <field name="completed_date"/>
+                        </group>
+                    </group>
+                    <group string="Result" invisible="not result_message and not log_id">
+                        <field name="result_message" nolabel="1" colspan="2"/>
+                        <field name="log_id"/>
+                    </group>
+                    <group string="Error" invisible="not error_message">
+                        <field name="error_message" nolabel="1" colspan="2"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Processing Queue Search View -->
+    <record id="view_processing_queue_search" model="ir.ui.view">
+        <field name="name">dms.document.processing.queue.search</field>
+        <field name="model">dms.document.processing.queue</field>
+        <field name="arch" type="xml">
+            <search string="Processing Queue">
+                <field name="name"/>
+                <field name="document_id"/>
+                <field name="service_id"/>
+                <separator/>
+                <filter name="filter_pending" string="Pending" domain="[('state', '=', 'pending')]"/>
+                <filter name="filter_processing" string="Processing" domain="[('state', '=', 'processing')]"/>
+                <filter name="filter_done" string="Completed" domain="[('state', '=', 'done')]"/>
+                <filter name="filter_failed" string="Failed" domain="[('state', '=', 'failed')]"/>
+                <separator/>
+                <filter name="filter_urgent" string="Urgent" domain="[('priority', '=', '3')]"/>
+                <filter name="filter_high" string="High Priority" domain="[('priority', 'in', ['2', '3'])]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_service" string="Service" context="{'group_by': 'service_id'}"/>
+                    <filter name="group_priority" string="Priority" context="{'group_by': 'priority'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Processing Queue Action -->
+    <record id="action_processing_queue" model="ir.actions.act_window">
+        <field name="name">Processing Queue</field>
+        <field name="res_model">dms.document.processing.queue</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_filter_pending': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No documents in processing queue
+            </p>
+            <p>
+                Add documents to the queue for batch AI classification processing.
+            </p>
+        </field>
+    </record>
+
+    <!-- Server action for batch classification from list view -->
+    <record id="action_server_batch_classify" model="ir.actions.server">
+        <field name="name">🤖 Classify with AI</field>
+        <field name="model_id" ref="documents.model_documents_document"/>
+        <field name="binding_model_id" ref="documents.model_documents_document"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = records.action_add_to_queue()
+        </field>
+    </record>
+</odoo>

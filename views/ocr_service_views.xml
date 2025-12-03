@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- OCR Service Form View -->
+    <record id="view_ocr_service_form" model="ir.ui.view">
+        <field name="name">dms.ocr.extraction.service.form</field>
+        <field name="model">dms.ocr.extraction.service</field>
+        <field name="arch" type="xml">
+            <form string="OCR Extraction Service">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-file-text-o">
+                            <field name="documents_processed" widget="statinfo" string="Processed"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Service Name"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Provider Configuration">
+                            <field name="active" invisible="1"/>
+                            <field name="provider"/>
+                            <field name="api_key" password="True"
+                                   invisible="provider == 'tesseract'"/>
+                            <field name="api_endpoint"
+                                   invisible="provider == 'tesseract'"/>
+                        </group>
+                        <group string="OCR Settings">
+                            <field name="languages"/>
+                            <field name="dpi"/>
+                            <field name="enhance_image"/>
+                            <field name="last_run"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Provider Help" name="help">
+                            <group>
+                                <div class="alert alert-info" role="alert">
+                                    <h4>OCR Provider Configuration</h4>
+                                    <p><strong>Tesseract (Local - Recommended):</strong></p>
+                                    <ul>
+                                        <li>Install: <code>brew install tesseract tesseract-lang</code></li>
+                                        <li>Python: <code>pip install pytesseract pillow</code></li>
+                                        <li>PDF support: <code>pip install pdf2image</code> + poppler</li>
+                                        <li>Languages: deu (German), eng (English), etc.</li>
+                                    </ul>
+                                    <p><strong>Azure Form Recognizer:</strong></p>
+                                    <ul>
+                                        <li>Create resource in Azure Portal</li>
+                                        <li>Python: <code>pip install azure-ai-formrecognizer</code></li>
+                                    </ul>
+                                    <p><strong>Google Cloud Vision:</strong></p>
+                                    <ul>
+                                        <li>Enable Vision API in Google Cloud</li>
+                                        <li>Python: <code>pip install google-cloud-vision</code></li>
+                                    </ul>
+                                </div>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- OCR Service List View -->
+    <record id="view_ocr_service_list" model="ir.ui.view">
+        <field name="name">dms.ocr.extraction.service.list</field>
+        <field name="model">dms.ocr.extraction.service</field>
+        <field name="arch" type="xml">
+            <list string="OCR Extraction Services">
+                <field name="name"/>
+                <field name="provider"/>
+                <field name="languages"/>
+                <field name="documents_processed"/>
+                <field name="last_run"/>
+                <field name="active" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- OCR Service Action -->
+    <record id="action_ocr_service" model="ir.actions.act_window">
+        <field name="name">OCR Services</field>
+        <field name="res_model">dms.ocr.extraction.service</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Configure OCR Extraction Services
+            </p>
+            <p>
+                Set up OCR providers (Tesseract, Azure, Google) for extracting
+                text from scanned documents and PDFs.
+            </p>
+        </field>
+    </record>
+
+    <!-- Extend DMS form with OCR button and fields -->
+    <record id="view_documents_document_dms_form_ocr" model="ir.ui.view">
+        <field name="name">documents.document.dms.form.ocr</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="view_documents_document_dms_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='action_classify_ai']" position="after">
+                <button name="action_extract_ocr"
+                        string="📄 Extract Text (OCR)"
+                        type="object"
+                        class="btn-secondary"/>
+                <button name="action_ocr_and_classify"
+                        string="🔄 OCR + Classify"
+                        type="object"
+                        class="btn-secondary"/>
+            </xpath>
+            <xpath expr="//group[@string='AI Extracted Data']" position="after">
+                <group string="OCR Extracted Text" invisible="not ocr_processed">
+                    <group colspan="2">
+                        <field name="ocr_processed" invisible="1"/>
+                        <field name="ocr_date"/>
+                    </group>
+                    <field name="ocr_text" nolabel="1" colspan="2"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Server action for batch OCR from list view -->
+    <record id="action_server_batch_ocr" model="ir.actions.server">
+        <field name="name">📄 Extract Text (OCR)</field>
+        <field name="model_id" ref="documents.model_documents_document"/>
+        <field name="binding_model_id" ref="documents.model_documents_document"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+for record in records:
+    try:
+        record.action_extract_ocr()
+    except Exception as e:
+        pass  # Continue with other records
+        </field>
+    </record>
+
+    <!-- Server action for batch OCR + Classify from list view -->
+    <record id="action_server_batch_ocr_classify" model="ir.actions.server">
+        <field name="name">🔄 OCR + Classify</field>
+        <field name="model_id" ref="documents.model_documents_document"/>
+        <field name="binding_model_id" ref="documents.model_documents_document"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+for record in records:
+    try:
+        record.action_ocr_and_classify()
+    except Exception as e:
+        pass  # Continue with other records
+        </field>
+    </record>
+</odoo>

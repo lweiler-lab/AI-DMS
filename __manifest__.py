@@ -1,13 +1,22 @@
 {
     'name': 'DMS Property Integration',
-    'version': '19.0.3.0.1',
+    'version': '19.0.4.0.0',
     'category': 'Document Management',
-    'summary': 'Document Management with Retention Policies for Real Estate',
+    'summary': 'AI-Assisted Document Management with Retention Policies for Real Estate',
     'description': """
 DMS Property Integration
 ========================
 
 AI-assisted Document Management System for real estate:
+
+* AI Document Classification (Phase 4)
+  - Multi-provider support: OpenAI, Claude, Azure, Local (Ollama)
+  - Vision-based document analysis
+  - German document type detection
+  - Automatic data extraction (vendor, amount, date, reference)
+  - Auto-tagging based on AI classification
+  - Confidence threshold configuration
+  - Classification logging and statistics
 
 * Retention Policies (German Legal Compliance)
   - AO §147: 10 years for accounting documents
@@ -43,12 +52,19 @@ AI-assisted Document Management System for real estate:
         'security/ir.model.access.csv',
         'data/retention_policies.xml',
         'data/tag_taxonomy.xml',
+        'data/ai_cron.xml',
         'views/retention_policy_views.xml',
         'views/documents_document_views.xml',
+        'views/ai_classification_views.xml',
+        'views/processing_queue_views.xml',
+        'views/ocr_service_views.xml',
         'views/dms_property_menus.xml',
     ],
     'assets': {},
     'application': False,
     'installable': True,
     'license': 'LGPL-3',
+    'external_dependencies': {
+        'python': [],  # openai, anthropic are optional
+    },
 }
