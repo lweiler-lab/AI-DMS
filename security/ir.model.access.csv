@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_retention_policy_user,documents.retention.policy.user,model_documents_retention_policy,group_dms_property_user,1,0,0,0
+access_retention_policy_manager,documents.retention.policy.manager,model_documents_retention_policy,group_dms_property_manager,1,1,1,0
+access_retention_policy_admin,documents.retention.policy.admin,model_documents_retention_policy,group_dms_property_admin,1,1,1,1

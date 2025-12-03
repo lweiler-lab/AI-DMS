@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- German Legal Retention Policies -->
+
+        <!-- AO §147, HGB §257: Buchungsbelege - 10 Jahre -->
+        <record id="retention_policy_buchungsbelege" model="documents.retention.policy">
+            <field name="name">Buchungsbelege (10 Jahre)</field>
+            <field name="sequence">10</field>
+            <field name="retention_years">10</field>
+            <field name="retention_trigger">fiscal_year_end</field>
+            <field name="action">archive</field>
+            <field name="legal_reference">AO §147, HGB §257 - Aufbewahrungspflicht für Buchungsbelege</field>
+            <field name="notes"><![CDATA[
+                <p><strong>Betroffene Dokumente:</strong></p>
+                <ul>
+                    <li>Rechnungen (Ein- und Ausgang)</li>
+                    <li>Quittungen</li>
+                    <li>Kontoauszüge</li>
+                    <li>Buchungsbelege</li>
+                </ul>
+                <p><strong>Fristbeginn:</strong> Ende des Kalenderjahres, in dem die letzte Eintragung gemacht wurde.</p>
+            ]]></field>
+        </record>
+
+        <!-- HGB §257: Jahresabschlüsse - 10 Jahre -->
+        <record id="retention_policy_jahresabschluss" model="documents.retention.policy">
+            <field name="name">Jahresabschlüsse (10 Jahre)</field>
+            <field name="sequence">20</field>
+            <field name="retention_years">10</field>
+            <field name="retention_trigger">fiscal_year_end</field>
+            <field name="action">archive</field>
+            <field name="legal_reference">HGB §257 - Aufbewahrung von Jahresabschlüssen</field>
+            <field name="notes"><![CDATA[
+                <p><strong>Betroffene Dokumente:</strong></p>
+                <ul>
+                    <li>Bilanzen</li>
+                    <li>Gewinn- und Verlustrechnungen</li>
+                    <li>Lageberichte</li>
+                    <li>Inventare</li>
+                </ul>
+            ]]></field>
+        </record>
+
+        <!-- BGB: Verträge - 10 Jahre nach Ende -->
+        <record id="retention_policy_vertraege" model="documents.retention.policy">
+            <field name="name">Verträge (10 Jahre nach Ende)</field>
+            <field name="sequence">30</field>
+            <field name="retention_years">10</field>
+            <field name="retention_trigger">expiry</field>
+            <field name="action">archive</field>
+            <field name="legal_reference">BGB Verjährungsfristen</field>
+            <field name="notes"><![CDATA[
+                <p><strong>Betroffene Dokumente:</strong></p>
+                <ul>
+                    <li>Mietverträge</li>
+                    <li>Dienstleistungsverträge</li>
+                    <li>Kaufverträge</li>
+                </ul>
+                <p><strong>Fristbeginn:</strong> Ende des Vertragsverhältnisses.</p>
+            ]]></field>
+        </record>
+
+        <!-- AO §147: Lohnabrechnungen - 6 Jahre -->
+        <record id="retention_policy_lohn" model="documents.retention.policy">
+            <field name="name">Lohnabrechnungen (6 Jahre)</field>
+            <field name="sequence">40</field>
+            <field name="retention_years">6</field>
+            <field name="retention_trigger">fiscal_year_end</field>
+            <field name="action">archive</field>
+            <field name="legal_reference">AO §147 - Aufbewahrung sonstiger Unterlagen</field>
+            <field name="notes"><![CDATA[
+                <p><strong>Betroffene Dokumente:</strong></p>
+                <ul>
+                    <li>Gehaltsabrechnungen</li>
+                    <li>Sozialversicherungsnachweise</li>
+                    <li>Lohnsteuerbescheinigungen</li>
+                </ul>
+            ]]></field>
+        </record>
+
+        <!-- DSGVO, AGG §15: Bewerbungen - 6 Monate -->
+        <record id="retention_policy_bewerbungen" model="documents.retention.policy">
+            <field name="name">Bewerbungsunterlagen (6 Monate)</field>
+            <field name="sequence">50</field>
+            <field name="retention_years">0</field>
+            <field name="retention_months">6</field>
+            <field name="retention_trigger">creation</field>
+            <field name="action">delete</field>
+            <field name="legal_reference">DSGVO Art. 5, AGG §15 - Datensparsamkeit</field>
+            <field name="notes"><![CDATA[
+                <p><strong>Wichtig:</strong> Bewerbungsunterlagen von abgelehnten Kandidaten müssen nach 6 Monaten gelöscht werden, um AGG-Klagen auszuschließen.</p>
+                <p>Ausnahme: Bei ausdrücklicher Einwilligung zur längeren Speicherung.</p>
+            ]]></field>
+        </record>
+
+        <!-- MBO-Ä §10: Medizinische Unterlagen - 30 Jahre -->
+        <record id="retention_policy_medizin" model="documents.retention.policy">
+            <field name="name">Medizinische Unterlagen (30 Jahre)</field>
+            <field name="sequence">60</field>
+            <field name="retention_years">30</field>
+            <field name="retention_trigger">document_date</field>
+            <field name="action">archive</field>
+            <field name="legal_reference">MBO-Ä §10 - Ärztliche Dokumentationspflicht</field>
+            <field name="notes"><![CDATA[
+                <p><strong>Betroffene Dokumente:</strong></p>
+                <ul>
+                    <li>Arztberichte</li>
+                    <li>Befunde</li>
+                    <li>Krankenhausentlassungen</li>
+                </ul>
+                <p><strong>Hinweis:</strong> Höchste Sensibilitätsstufe erforderlich!</p>
+            ]]></field>
+        </record>
+
+        <!-- DSGVO: Ausweiskopien - Prüfung erforderlich -->
+        <record id="retention_policy_ausweise" model="documents.retention.policy">
+            <field name="name">Ausweiskopien (Prüfung erforderlich)</field>
+            <field name="sequence">70</field>
+            <field name="retention_years">0</field>
+            <field name="retention_months">1</field>
+            <field name="retention_trigger">creation</field>
+            <field name="action">review</field>
+            <field name="legal_reference">DSGVO Art. 5 - Zweckbindung und Datensparsamkeit</field>
+            <field name="notes"><![CDATA[
+                <p><strong>Achtung:</strong> Ausweiskopien sollten nur mit besonderer Begründung gespeichert werden!</p>
+                <p>Regelmäßige Prüfung erforderlich, ob Speicherung noch notwendig ist.</p>
+                <p><strong>Empfehlung:</strong> Nach Identitätsprüfung löschen, nur Vermerk aufbewahren.</p>
+            ]]></field>
+        </record>
+
+        <!-- Steuerunterlagen - 10 Jahre -->
+        <record id="retention_policy_steuer" model="documents.retention.policy">
+            <field name="name">Steuerunterlagen (10 Jahre)</field>
+            <field name="sequence">15</field>
+            <field name="retention_years">10</field>
+            <field name="retention_trigger">fiscal_year_end</field>
+            <field name="action">archive</field>
+            <field name="legal_reference">AO §147 - Steuerrechtliche Aufbewahrungspflicht</field>
+            <field name="notes"><![CDATA[
+                <p><strong>Betroffene Dokumente:</strong></p>
+                <ul>
+                    <li>Steuerbescheide</li>
+                    <li>Steuererklärungen</li>
+                    <li>Belege für Steuererklärungen</li>
+                </ul>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

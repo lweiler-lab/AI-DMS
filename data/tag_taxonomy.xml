@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- V19: documents.facet removed - tags are now flat with tooltip field -->
+
+        <!-- ========================================== -->
+        <!-- PERSON TAGS (Dimension 1)                  -->
+        <!-- ========================================== -->
+        <record id="tag_person_mieter" model="documents.tag">
+            <field name="name">Mieter</field>
+            <field name="tooltip">Dokumente von/für Mieter</field>
+            <field name="sequence">110</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="tag_person_eigentuemer" model="documents.tag">
+            <field name="name">Eigentümer</field>
+            <field name="tooltip">Dokumente von/für Eigentümer</field>
+            <field name="sequence">120</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="tag_person_lieferant" model="documents.tag">
+            <field name="name">Lieferant</field>
+            <field name="tooltip">Dokumente von Lieferanten/Dienstleistern</field>
+            <field name="sequence">130</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="tag_person_behoerde" model="documents.tag">
+            <field name="name">Behörde</field>
+            <field name="tooltip">Amtliche Dokumente</field>
+            <field name="sequence">140</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="tag_person_privat" model="documents.tag">
+            <field name="name">Privat</field>
+            <field name="tooltip">Private Dokumente</field>
+            <field name="sequence">150</field>
+            <field name="color">1</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- DOCUMENT TYPE TAGS (Dimension 2)           -->
+        <!-- ========================================== -->
+        <!-- Invoices -->
+        <record id="tag_doctype_rechnung_eingang" model="documents.tag">
+            <field name="name">Eingangsrechnung</field>
+            <field name="tooltip">Rechnung von Lieferanten</field>
+            <field name="sequence">210</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="tag_doctype_rechnung_ausgang" model="documents.tag">
+            <field name="name">Ausgangsrechnung</field>
+            <field name="tooltip">Rechnung an Kunden</field>
+            <field name="sequence">220</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="tag_doctype_quittung" model="documents.tag">
+            <field name="name">Quittung</field>
+            <field name="tooltip">Zahlungsbeleg</field>
+            <field name="sequence">230</field>
+            <field name="color">2</field>
+        </record>
+
+        <!-- Contracts -->
+        <record id="tag_doctype_mietvertrag" model="documents.tag">
+            <field name="name">Mietvertrag</field>
+            <field name="tooltip">Miet- und Pachtverträge</field>
+            <field name="sequence">240</field>
+            <field name="color">3</field>
+        </record>
+
+        <record id="tag_doctype_kaufvertrag" model="documents.tag">
+            <field name="name">Kaufvertrag</field>
+            <field name="tooltip">Kauf- und Verkaufsverträge</field>
+            <field name="sequence">250</field>
+            <field name="color">3</field>
+        </record>
+
+        <record id="tag_doctype_versicherung" model="documents.tag">
+            <field name="name">Versicherung</field>
+            <field name="tooltip">Versicherungspolicen und -unterlagen</field>
+            <field name="sequence">260</field>
+            <field name="color">3</field>
+        </record>
+
+        <!-- Tax Documents -->
+        <record id="tag_doctype_steuerbescheid" model="documents.tag">
+            <field name="name">Steuerbescheid</field>
+            <field name="tooltip">Finanzamt-Bescheide</field>
+            <field name="sequence">270</field>
+            <field name="color">4</field>
+        </record>
+
+        <record id="tag_doctype_steuererklaerung" model="documents.tag">
+            <field name="name">Steuererklärung</field>
+            <field name="tooltip">Eingereichte Steuererklärungen</field>
+            <field name="sequence">280</field>
+            <field name="color">4</field>
+        </record>
+
+        <!-- Banking -->
+        <record id="tag_doctype_kontoauszug" model="documents.tag">
+            <field name="name">Kontoauszug</field>
+            <field name="tooltip">Bankauszüge</field>
+            <field name="sequence">290</field>
+            <field name="color">5</field>
+        </record>
+
+        <!-- Correspondence -->
+        <record id="tag_doctype_korrespondenz" model="documents.tag">
+            <field name="name">Korrespondenz</field>
+            <field name="tooltip">Schriftverkehr und E-Mails</field>
+            <field name="sequence">300</field>
+            <field name="color">6</field>
+        </record>
+
+        <!-- Certificates -->
+        <record id="tag_doctype_zertifikat" model="documents.tag">
+            <field name="name">Zertifikat</field>
+            <field name="tooltip">Bescheinigungen und Zertifikate</field>
+            <field name="sequence">310</field>
+            <field name="color">7</field>
+        </record>
+
+        <!-- Property -->
+        <record id="tag_doctype_grundbuch" model="documents.tag">
+            <field name="name">Grundbuchauszug</field>
+            <field name="tooltip">Grundbucheinträge</field>
+            <field name="sequence">320</field>
+            <field name="color">7</field>
+        </record>
+
+        <record id="tag_doctype_bauplan" model="documents.tag">
+            <field name="name">Bauplan</field>
+            <field name="tooltip">Baupläne und Zeichnungen</field>
+            <field name="sequence">330</field>
+            <field name="color">7</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- STATUS TAGS (Dimension 5)                  -->
+        <!-- ========================================== -->
+        <record id="tag_status_entwurf" model="documents.tag">
+            <field name="name">Entwurf</field>
+            <field name="tooltip">Noch nicht finalisiert</field>
+            <field name="sequence">510</field>
+            <field name="color">8</field>
+        </record>
+
+        <record id="tag_status_aktiv" model="documents.tag">
+            <field name="name">Aktiv</field>
+            <field name="tooltip">Gültiges, aktives Dokument</field>
+            <field name="sequence">520</field>
+            <field name="color">10</field>
+        </record>
+
+        <record id="tag_status_archiviert" model="documents.tag">
+            <field name="name">Archiviert</field>
+            <field name="tooltip">Aufbewahrungspflichtig</field>
+            <field name="sequence">530</field>
+            <field name="color">9</field>
+        </record>
+
+        <record id="tag_status_pruefung" model="documents.tag">
+            <field name="name">Prüfung</field>
+            <field name="tooltip">Zur Prüfung/Genehmigung</field>
+            <field name="sequence">540</field>
+            <field name="color">3</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- SOURCE TAGS (Dimension 6)                  -->
+        <!-- ========================================== -->
+        <record id="tag_source_scan" model="documents.tag">
+            <field name="name">Scan</field>
+            <field name="tooltip">Gescanntes Dokument</field>
+            <field name="sequence">610</field>
+            <field name="color">11</field>
+        </record>
+
+        <record id="tag_source_email" model="documents.tag">
+            <field name="name">E-Mail</field>
+            <field name="tooltip">E-Mail-Anhang</field>
+            <field name="sequence">620</field>
+            <field name="color">11</field>
+        </record>
+
+        <record id="tag_source_portal" model="documents.tag">
+            <field name="name">Portal</field>
+            <field name="tooltip">Portal-Upload</field>
+            <field name="sequence">630</field>
+            <field name="color">11</field>
+        </record>
+
+        <record id="tag_source_digital" model="documents.tag">
+            <field name="name">Digital</field>
+            <field name="tooltip">Originär digital erstellt</field>
+            <field name="sequence">640</field>
+            <field name="color">11</field>
+        </record>
+
+        <!-- ========================================== -->
+        <!-- SENSITIVITY TAGS (Dimension 7)             -->
+        <!-- ========================================== -->
+        <record id="tag_sensitivity_public" model="documents.tag">
+            <field name="name">Öffentlich</field>
+            <field name="tooltip">Keine Einschränkung</field>
+            <field name="sequence">710</field>
+            <field name="color">10</field>
+        </record>
+
+        <record id="tag_sensitivity_internal" model="documents.tag">
+            <field name="name">Intern</field>
+            <field name="tooltip">Nur interne Nutzung</field>
+            <field name="sequence">720</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="tag_sensitivity_confidential" model="documents.tag">
+            <field name="name">Vertraulich</field>
+            <field name="tooltip">Eingeschränkter Personenkreis</field>
+            <field name="sequence">730</field>
+            <field name="color">3</field>
+        </record>
+
+        <record id="tag_sensitivity_restricted" model="documents.tag">
+            <field name="name">Streng Vertraulich</field>
+            <field name="tooltip">Höchste Geheimhaltung</field>
+            <field name="sequence">740</field>
+            <field name="color">1</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- V19: Documents module doesn't have a traditional form view -->
+    <!-- Creating standalone form for DMS metadata editing -->
+
+    <!-- DMS Property Form View (Standalone, not inheriting) -->
+    <record id="view_documents_document_dms_form" model="ir.ui.view">
+        <field name="name">documents.document.dms.form</field>
+        <field name="model">documents.document</field>
+        <field name="priority">100</field>
+        <field name="arch" type="xml">
+            <form string="Document - DMS Properties">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="Entity Linking">
+                            <field name="property_id"/>
+                            <field name="tenant_id"/>
+                            <field name="linked_invoice_id"/>
+                        </group>
+                        <group string="Classification">
+                            <field name="sensitivity"/>
+                            <field name="document_source"/>
+                            <field name="is_invoice"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group string="Dates &amp; Retention">
+                            <field name="document_date"/>
+                            <field name="fiscal_year" readonly="1"/>
+                            <field name="retention_policy_id"/>
+                            <field name="retention_date" readonly="1"/>
+                            <field name="retention_action_due" readonly="1"/>
+                        </group>
+                        <group string="Invoice Processing" invisible="not is_invoice">
+                            <field name="invoice_state"/>
+                            <field name="is_duplicate" readonly="1"/>
+                            <field name="duplicate_of_id" readonly="1"
+                                   invisible="invoice_state != 'duplicate'"/>
+                        </group>
+                    </group>
+
+                    <group string="AI Extracted Data" invisible="not is_invoice">
+                        <group>
+                            <field name="extracted_vendor"/>
+                            <field name="extracted_amount"/>
+                        </group>
+                        <group>
+                            <field name="extracted_date"/>
+                            <field name="extracted_reference"/>
+                            <field name="extraction_confidence" widget="progressbar"/>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="action_check_duplicate_invoice"
+                                string="Check Duplicates"
+                                type="object"
+                                class="btn-secondary"
+                                invisible="not is_invoice"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Extend Documents List View -->
+    <record id="view_documents_document_list_inherit_dms" model="ir.ui.view">
+        <field name="name">documents.document.list.inherit.dms</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.documents_view_list"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='name']" position="after">
+                <field name="property_id" optional="hide"/>
+                <field name="tenant_id" optional="hide"/>
+                <field name="sensitivity" optional="hide"/>
+                <field name="document_date" optional="show"/>
+                <field name="retention_date" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Extend Documents Search View -->
+    <record id="view_documents_document_search_inherit_dms" model="ir.ui.view">
+        <field name="name">documents.document.search.inherit.dms</field>
+        <field name="model">documents.document</field>
+        <field name="inherit_id" ref="documents.document_view_search"/>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="property_id"/>
+                <field name="tenant_id"/>
+                <field name="sensitivity"/>
+                <separator/>
+                <filter name="filter_is_invoice" string="Invoices"
+                        domain="[('is_invoice', '=', True)]"/>
+                <filter name="filter_duplicates" string="Duplicates"
+                        domain="[('invoice_state', '=', 'duplicate')]"/>
+                <filter name="filter_retention_due" string="Retention Due"
+                        domain="[('retention_action_due', '=', True)]"/>
+                <separator/>
+                <filter name="filter_public" string="Public"
+                        domain="[('sensitivity', '=', 'public')]"/>
+                <filter name="filter_confidential" string="Confidential"
+                        domain="[('sensitivity', '=', 'confidential')]"/>
+                <filter name="filter_restricted" string="Restricted"
+                        domain="[('sensitivity', '=', 'restricted')]"/>
+                <separator/>
+                <filter name="group_property" string="Property"
+                        context="{'group_by': 'property_id'}"/>
+                <filter name="group_tenant" string="Tenant"
+                        context="{'group_by': 'tenant_id'}"/>
+                <filter name="group_sensitivity" string="Sensitivity"
+                        context="{'group_by': 'sensitivity'}"/>
+                <filter name="group_fiscal_year" string="Fiscal Year"
+                        context="{'group_by': 'fiscal_year'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action to open DMS Properties form -->
+    <record id="action_documents_dms_properties" model="ir.actions.act_window">
+        <field name="name">DMS Properties</field>
+        <field name="res_model">documents.document</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{'form_view_ref': 'dms_property.view_documents_document_dms_form'}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No documents found
+            </p>
+            <p>
+                Upload documents in the Documents app, then manage their DMS properties here.
+            </p>
+        </field>
+    </record>
+</odoo>

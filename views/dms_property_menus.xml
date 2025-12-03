@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu under Documents -->
+    <menuitem id="menu_dms_property_root"
+              name="Property DMS"
+              parent="documents.menu_root"
+              sequence="50"/>
+
+    <!-- DMS Properties Menu (for document metadata) -->
+    <menuitem id="menu_dms_properties"
+              name="DMS Properties"
+              parent="menu_dms_property_root"
+              action="action_documents_dms_properties"
+              sequence="5"/>
+
+    <!-- Retention Policies Menu -->
+    <menuitem id="menu_retention_policies"
+              name="Retention Policies"
+              parent="menu_dms_property_root"
+              action="action_retention_policy"
+              sequence="10"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_dms_property_config"
+              name="Configuration"
+              parent="menu_dms_property_root"
+              sequence="100"
+              groups="group_dms_property_admin"/>
+</odoo>
