@@ -91,11 +91,9 @@
                 <filter name="filter_urgent" string="Urgent" domain="[('priority', '=', '3')]"/>
                 <filter name="filter_high" string="High Priority" domain="[('priority', 'in', ['2', '3'])]"/>
                 <separator/>
-                <group expand="0" string="Group By">
-                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
-                    <filter name="group_service" string="Service" context="{'group_by': 'service_id'}"/>
-                    <filter name="group_priority" string="Priority" context="{'group_by': 'priority'}"/>
-                </group>
+                <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                <filter name="group_service" string="Service" context="{'group_by': 'service_id'}"/>
+                <filter name="group_priority" string="Priority" context="{'group_by': 'priority'}"/>
             </search>
         </field>
     </record>
