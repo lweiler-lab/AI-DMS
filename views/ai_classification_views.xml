@@ -188,9 +188,9 @@
                 <filter name="filter_applied" string="Applied" domain="[('applied', '=', True)]"/>
                 <filter name="filter_errors" string="Errors" domain="[('error_message', '!=', False)]"/>
                 <separator/>
-                <filter name="filter_high_confidence" string="High Confidence (&gt;80%)"
-                        domain="[('confidence', '&gt;=', 0.8)]"/>
-                <filter name="filter_low_confidence" string="Low Confidence (&lt;50%)"
+                <filter name="filter_high_confidence" string="High Confidence (80%+)"
+                        domain="[('confidence', '>=', 0.8)]"/>
+                <filter name="filter_low_confidence" string="Low Confidence (below 50%)"
                         domain="[('confidence', '&lt;', 0.5)]"/>
                 <separator/>
                 <group expand="0" string="Group By">
